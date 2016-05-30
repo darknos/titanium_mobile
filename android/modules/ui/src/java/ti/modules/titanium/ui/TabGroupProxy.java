@@ -24,6 +24,7 @@ import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.TiContext;
 import org.appcelerator.titanium.proxy.TiWindowProxy;
 import org.appcelerator.titanium.util.TiConvert;
+import org.appcelerator.titanium.util.TiRHelper;
 import org.appcelerator.titanium.util.TiUIHelper;
 
 import ti.modules.titanium.ui.widget.tabgroup.TiUIAbstractTabGroup;
@@ -526,6 +527,19 @@ public class TabGroupProxy extends TiWindowProxy implements TiActivityWindow
 				windowFlags = windowFlags | WindowManager.LayoutParams.FLAG_SECURE;
 			}
 		}
+		
+		// Set the theme property
+        if (hasProperty(TiC.PROPERTY_THEME)) {
+            String theme = TiConvert.toString(getProperty(TiC.PROPERTY_THEME));
+            if (theme != null) {
+                try {
+                    intent.putExtra(TiC.PROPERTY_THEME,
+                        TiRHelper.getResource("style." + theme.replaceAll("[^A-Za-z0-9_]", "_")));
+                } catch (Exception e) {
+                    Log.w(TAG, "Cannot find the theme: " + theme);
+                }
+            }
+        }
 		
 		//Stuff flags in intent
 		intent.putExtra(TiC.PROPERTY_WINDOW_FLAGS, windowFlags);
