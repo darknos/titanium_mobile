@@ -116,7 +116,9 @@ public class TiUIActionBarTabGroup extends TiUIAbstractTabGroup implements TabLi
 		// Setup the action bar for navigation tabs.
 		actionBar = activity.getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actionBar.setDisplayShowTitleEnabled(true);
+		boolean showActionBarTitle = TiConvert.toBoolean(proxy.getProperty("showActionBarTitle"), true);
+		Log.d(TAG, "showActionBarTitle working " + showActionBarTitle);
+		actionBar.setDisplayShowTitleEnabled(showActionBarTitle);
 
 		tabGroupPagerAdapter = new TabGroupFragmentPagerAdapter(((AppCompatActivity) activity).getSupportFragmentManager());
 
